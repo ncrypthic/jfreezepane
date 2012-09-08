@@ -26,14 +26,14 @@
      * Freeze function
      * @function
      */
-    function fnFreeze(elmt, col)
+    function fnFreeze( elmt, col, x, y )
     {
         var cols,rows,tempTbl1,tempTbl2,tempTbl3,tempTbl4;
         // Create a container for our plugin.
-        elmt.before($('<div id="freezeContainer"></div>'));
+        elmt.before( $( '<div id="freezeContainer"></div>' ));
         // Create left and right column.
-        $('#freezeContainer').append($('<div id="leftCol"></div>'));
-        $('#freezeContainer').append($('<div id="rightCol"></div>'));
+        $('#freezeContainer').append( $('<div id="leftCol"></div>' ));
+        $('#freezeContainer').append( $('<div id="rightCol"></div>' ));
         if(col > 0)
         {
             var newRow,headers;
@@ -41,51 +41,51 @@
             tempTbl2 = $('<table id="freezeHeader"><thead></thead><tfoot></tfoot><tbody></tbody></table>');
             tempTbl3 = $('<table id="freezeContent"><thead></thead><tfoot></tfoot><tbody></tbody></table>');
             tempTbl4 = $('<table id="freezeColHeader"><thead></thead><tfoot></tfoot><tbody></tbody></table>');
-            rows = $('tr',elmt);
+            rows     = $('tr',elmt);
             // For every table row in the element
-            rows.each(function()
+            rows.each( function()
             {
                 // Find table headers element.
-                if($(this).find('th').length > 0)
+                if( $(this).find('th').length > 0 )
                 {
                     headers = $('th',this);
-                    newRow=$('<tr></tr>');
+                    newRow  = $('<tr></tr>');
                     // Table header in frozen columns.
-                    for(i = 0; i < col; i++)
+                    for( i = 0; i < col; i++ )
                     {
                         // Add the header element into temporary new row
-                        newRow.append(headers[i]);
+                        newRow.append( headers[i] );
                     }
                     // Add table header into freezeColHeader
-                    $('thead',tempTbl4).append(newRow);
-                    newRow=$('<tr></tr>');
+                    $( 'thead', tempTbl4 ).append( newRow );
+                    newRow  = $('<tr></tr>');
                     // Table header in data columns.
-                    for(i = col; i < headers.length; i++)
+                    for( i = col; i < headers.length; i++ )
                     {
-                        newRow.append(headers[i]);
+                        newRow.append( headers[i] );
                     }
                     // Add table header into freezeHeader
-                    $('thead',tempTbl2).append(newRow);
+                    $( 'thead', tempTbl2 ).append( newRow );
                 }
                 else
                 {
-                    cols=$('td',this);
-                    newRow=$('<tr></tr>');
+                    cols   = $('td',this);
+                    newRow = $('<tr></tr>');
                     // Table data element in frozen columns
-                    for(i = 0; i < col; i++)
+                    for( i = 0; i < col; i++ )
                     {
                         // Add the data element into temporary new row
-                        newRow.append(cols[i]);
+                        newRow.append( cols[i] );
                     }
                     // Add the new temporary row into #freezeCol table
-                    $('tbody',tempTbl1).append(newRow);
-                    newRow=$('<tr></tr>');
-                    for(i = col; i < cols.length; i++)
+                    $('tbody',tempTbl1).append( newRow );
+                    newRow = $('<tr></tr>');
+                    for( i = col; i < cols.length; i++ )
                     {
-                        newRow.append(cols[i]);
+                        newRow.append( cols[i] );
                     }
                     // Add the new temporary row into #freezeContent table
-                    $('tbody',tempTbl3).append(newRow);
+                    $('tbody',tempTbl3).append( newRow );
                 }
             })
         }
@@ -95,43 +95,37 @@
         jQuery('#leftCol').prepend(tempTbl4);
         jQuery('#rightCol').append(tempTbl2);
         jQuery('#rightCol').append(tempTbl3);
-        $('#rightCol').css('width',jQuery('#freezeContainer').width() - jQuery('#freezeCol').width());
-        jQuery(window).scroll(function(){ 
-            if(document.body.scrollLeft > 0)
+        $('#rightCol').css( 'width', jQuery('#freezeContainer').width() - jQuery('#freezeCol').width() );
+        jQuery(window).scroll( function(){
+            if( document.body.scrollLeft > 0 && document.body.scrollLeft >= jQuery('#freezeContainer').offset().left )
             {
                 jQuery('#leftCol').css({
-                    'position':'relative',
-                    'left':document.body.scrollLeft
+                    'position' : 'relative',
+                    'left'     : document.body.scrollLeft - x
                 });
             }
             else
             {
                 jQuery('#leftCol').css({
-                    'position':'relative',
-                    'left':document.body.scrollLeft
+                    'position' : 'relative',
+                    'left'     : document.body.scrollLeft - x
                 });
             }
-            if(document.body.scrollTop > 0)
+            if( document.body.scrollTop > 0 && document.body.scrollTop >= jQuery('#freezeContainer').offset().top )
             {
                 jQuery('#freezeColHeader').css({
-                    'position':'relative',
-                    'top':document.body.scrollTop
+                    'position' : 'relative',
+                    'top'      : document.body.scrollTop - y
                 });
                 jQuery('#freezeHeader').css({
-                    'position':'relative',
-                    'top':document.body.scrollTop
+                    'position' : 'relative',
+                    'top'      : document.body.scrollTop - y
                 });
             }
             else
             {
-                jQuery('#freezeColHeader').css({
-                    'position':'',
-                    'top':''
-                });
-                jQuery('#freezeHeader').css({
-                    'position':'relative',
-                    'top':document.body.scrollTop
-                });
+                jQuery('#freezeColHeader').css( { 'position' : '', 'top' : '' });
+                jQuery('#freezeHeader').css( { 'position' : 'relative', 'top' : '' });
             }
         });
     }
@@ -146,7 +140,9 @@
                     if (!data) {
                         $this.data('freezePane', {
                             row : (typeof opts.row != 'undefined') ? opts.row : 1,
-                            col : (typeof opts.col != 'undefined') ? opts.col : 1
+                            col : (typeof opts.col != 'undefined') ? opts.col : 1,
+			    y   : $this.position().top,
+			    x   : $this.position().left
                         });
                         data = $this.data('freezePane');
                     }
@@ -155,13 +151,13 @@
                         if(typeof opts.row != 'undefined') data.row = opts.row;
                         if(typeof opts.col != 'undefined') data.col = opts.col;
                     }
-                    fnFreeze($this, data.col);
+                    fnFreeze($this, data.col, data.x, data.y);
                 }
             );
         },
         row : function( val ) {
             var $this = $(this);
-            var data = $this.data('freezePane');
+            var data  = $this.data('freezePane');
             if ( typeof val !== 'undefined' ) 
                 data.row = val;
             else 
@@ -169,7 +165,7 @@
         },
         col : function( val ) {
             var $this = $(this);
-            var data = $this.data('freezePane');
+            var data  = $this.data('freezePane');
             if ( typeof val !== 'undefined' ) 
                 data.col = val; 
             else 
@@ -177,7 +173,7 @@
         },
         freeze : function() {
             var $this = $(this);
-            var data = $this.data('freezePane');
+            var data  = $this.data('freezePane');
             fnFreeze($this, data.row, data.col);
         },
         unfreeze : function() {

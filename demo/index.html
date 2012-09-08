@@ -3,25 +3,114 @@
     <title>jFreezePane Demo Page</title>
     <script src="jquery-1.6.1.min.js"></script>
     <script src="../jfreezepane-0.1.js"></script>
-    <meta content="">
+    <script>
+      jQuery(document).ready( function() {
+	jQuery('#demotbl').freezePane({col: 4});
+      });
+    </script>
     <style>
-    table {border-spacing: 1px !important; margin:0px; padding:0px;}
-    table thead { line-height: 12px; border-spacing: 1px;}
-    body {margin:0px;padding:0px;} 
-    /* Temp */
-    #freezeColHeader,#freezeHeader {background-color:white}
-    /* Stop Temp */
-    #freezeColHeader { width: 100%;}
-    #freezeCol,#leftCol {float:left;}
-    #freezeCol th,td { min-width: 45px; }
-    #freezeCol {background-color:white;}
-    #leftCol {z-index:2;}
-    #rightCol { float: right; }
-    #rightCol table { border-spacing:1px; }
-    #rightCol td, #freezeHeader th{min-width: 60px;text-align:center;}
+	table { border-spacing: 1px !important; margin: 0px; padding: 0px; }
+	table thead { line-height: 12px; border-spacing: 1px; }
+	body { margin: 0px; padding: 0px; }
+	/* Temp */
+	#freezeColHeader,#freezeHeader { background-color: white; }
+	/* Stop Temp */
+	#freezeColHeader { width: 100%; }
+	#freezeCol,#leftCol {float: left; }
+	#freezeCol th,td { min-width: 45px; }
+	#freezeCol { background-color: white; }
+	#leftCol { z-index: 2; }
+	#rightCol { float: right; }
+	#rightCol table { border-spacing: 1px; }
+	#rightCol td, #freezeHeader th{ min-width: 60px; text-align: center; }
     </style>
   </head>
   <body>
+    <div>
+	To use the code just run the following javascript command
+	<pre>
+	  jQuery('tableSelector').freezePane( { col : colIndexToFreeze });
+	</pre>
+	example :
+<pre>
+&lt;script&gt;
+    jQuery(document).ready( function() {
+	jQuery('#demoTbl').freezePane( { col : 4 }); // Freeze the forth column
+    }
+&lt;/script&gt;
+&lt;body&gt;
+  &lt;table id="demotbl"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+	&lt;th class="number"&gt;No.&lt;/th&gt;
+	&lt;th&gt;Name&lt;/th&gt;
+	&lt;th&gt;State&lt;/th&gt;
+	&lt;th&gt;Job-1&lt;/th&gt;
+	&lt;th&gt;Job-2&lt;/th&gt;
+	&lt;th&gt;Job-3&lt;/th&gt;
+	&lt;th&gt;Job-4&lt;/th&gt;
+	&lt;th&gt;Job-5&lt;/th&gt;
+	&lt;th&gt;Job-6&lt;/th&gt;
+	&lt;th&gt;Job-7&lt;/th&gt;
+	&lt;th&gt;Job-8&lt;/th&gt;
+	&lt;th&gt;Job-9&lt;/th&gt;
+	&lt;th&gt;Job-10&lt;/th&gt;
+	&lt;th&gt;Job-11&lt;/th&gt;
+	&lt;th&gt;Job-12&lt;/th&gt;
+	&lt;th&gt;Job-13&lt;/th&gt;
+	&lt;th&gt;Job-14&lt;/th&gt;
+	&lt;th&gt;Job-15&lt;/th&gt;
+	&lt;th&gt;Job-16&lt;/th&gt;
+	&lt;th&gt;Job-17&lt;/th&gt;
+	&lt;th&gt;Job-18&lt;/th&gt;
+	&lt;th&gt;Job-19&lt;/th&gt;
+	&lt;th&gt;Job-20&lt;/th&gt;
+	&lt;th&gt;Job-21&lt;/th&gt;
+	&lt;th&gt;Job-22&lt;/th&gt;
+	&lt;th&gt;Job-23&lt;/th&gt;
+	&lt;th&gt;Job-24&lt;/th&gt;
+	&lt;th&gt;Job-25&lt;/th&gt;
+	&lt;th&gt;Total&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tfoot&gt;&lt;/tfoot&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+	&lt;td&gt;1&lt;/td&gt;
+	&lt;td&gt;Adi&lt;/td&gt;
+	&lt;td&gt;Approved&lt;/td&gt;
+	&lt;td&gt;2&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;2&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;4&lt;/td&gt;
+	&lt;td&gt;8&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;4&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;4&lt;/td&gt;
+	&lt;td&gt;8&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;8&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;2&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;2&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;4&lt;/td&gt;
+	&lt;td&gt;8&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;4&lt;/td&gt;
+	&lt;td&gt;-&lt;/td&gt;
+	&lt;td&gt;40&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+</pre>
+    </div>
     <table id="demotbl">
       <thead>
 	<tr>
