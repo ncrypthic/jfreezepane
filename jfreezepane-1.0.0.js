@@ -158,7 +158,6 @@
             .on('page.dt', resetDataTable)
             .on('order.dt', resetDataTable);
         jQuery(document).on( 'draw.dt', function(e, settings) {
-            console.log(settings);
             fnFreeze(jQuery(settings.nTable), settings.oInit.freezePane);
         });
     }
