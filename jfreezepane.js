@@ -157,8 +157,9 @@
             .on('length.dt', resetDataTable)
             .on('page.dt', resetDataTable)
             .on('order.dt', resetDataTable);
-        jQuery(document).on( 'draw.dt', function(e, settings) {
-            fnFreeze(jQuery(settings.nTable), settings.oInit.freezePane);
-        });
     }
+    
+    jQuery(document).on( 'draw.dt', function(e, settings) {
+        fnFreeze(jQuery(settings.nTable), settings.oInit.freezePane);
+    });
 })( jQuery );
