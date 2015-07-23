@@ -239,7 +239,7 @@
     /**
      * DataTables integration
      */
-    if(typeof jQuery.fn.dataTable === 'function') {
+    if(typeof jQuery.fn.dataTable === 'function' || typeof jQuery.fn.DataTable === 'function') {
         jQuery.fn.DataTable.FreezePane = jQuery.fn.dataTable.FreezePane = $.fn.freezePane;
         var resetDataTable = function(e, settings) {
             var table = jQuery(settings.nTable);
