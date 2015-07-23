@@ -1,0 +1,63 @@
+.freeze-panel table {
+    position: relative;
+    table-layout: fixed;
+    width: inherit;
+}
+
+.freeze-panel {
+    width: 100%;
+}
+
+.freeze-container {
+    position: relative;
+    overflow: auto;
+    z-index: 2;
+    min-height: 600px; /* height option */
+    height: auto; /* height option */
+}
+
+.freeze-top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 48px; /* calculated */
+    overflow: hidden;
+    z-index: 3;
+    background-color: white; /* Layer color */
+    border-bottom: 2px solid #bebebe;
+}
+
+.freeze-top-right {
+    width: auto;
+}
+
+.freeze-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px; /* calculated */
+    height: inherit;
+    overflow: hidden;
+    z-index: 3;
+    background-color: white;
+    border-right: 2px solid #bebebe;
+}
+
+.freeze-top.freeze-left {
+    width: 250px; /* calculated */
+    height: 48px; /* calculated */
+    z-index: 4;
+    top: 0;
+    background-color: white; /* Layer color */
+}
+
+.freeze-bottom-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.freeze-container .active {
+    background-color: cornflowerblue;
+}
