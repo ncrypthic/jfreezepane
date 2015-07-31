@@ -15,7 +15,7 @@ containers will contain a copy of your table element.
     bower install ncrypthic/jfreezepane
     ```
 
-  * In browser
+  * On browser
 
     Just include ```jfreezepane.js``` after ```jquery.js``` inside your html file
     ```html
