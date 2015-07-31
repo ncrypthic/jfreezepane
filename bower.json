@@ -1,0 +1,28 @@
+{
+  "name": "jfreezepane",
+  "main": "jfreezepane.js",
+  "version": "1.1.3",
+  "homepage": "https://github.com/ncrypthic/jfreezepane",
+  "description": "Table freeze pane view",
+  "keywords": [
+    "table",
+    "table freeze",
+    "table freezepane",
+    "table freeze column",
+    "table freeze header",
+    "table freeze column and header",
+    "jquery table",
+    "jquery datatable"
+  ],
+  "authors": [
+    "Lim Afriyadi"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

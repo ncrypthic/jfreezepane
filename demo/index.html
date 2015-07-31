@@ -71,6 +71,16 @@
             jQuery('.active', $table).removeClass('active');
             $row.addClass('active');
             jQuery('tr td:eq('+col+')', $table).addClass('active');
+            console.log('fp.clicked');
+        });
+        jQuery('.freeze-container input').on('keyup', function() {
+            $(this).parents('tr').find('td').eq(5).text('hahahah');
+            $(this).parents('td').trigger('fp.update');
+        });
+        jQuery('.freeze-container .btn').on('click', function() {
+            $(this).parents('tr').find('td').eq(6).text('hehehe');
+            $(this).parents('tr').find('td').eq(7).text('hohoho');
+            $(this).parents('td').trigger('fp.update');
         });
       });
     </script>
@@ -198,8 +208,8 @@
               </thead>
               <tbody>
                   <tr>
-                      <td>1</td>
-                      <td>Adi</td>
+                      <td><button type="button" class="btn">Test</button></td>
+                      <td><input type="text" class="input-text"/></td>
                       <td>Approved</td>
                       <td>2</td>
                       <td>-</td>
