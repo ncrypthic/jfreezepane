@@ -51,7 +51,7 @@
                 border-spacing: 0;
         }
         .container {
-            width: 90%;
+            width: 720px;
             height: 420px;
             margin-left: auto;
             margin-right: auto;
@@ -59,10 +59,10 @@
     </style>
     <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="../jfreezepane-1.0.0.js"></script>
+    <script src="../jfreezepane.js"></script>
     <script>
       jQuery(document).ready( function() {
-        jQuery('#demotbl').freezePane({ col: 2 });
+        jQuery('#demotbl').freezePane({ col: 2, autohide: false });
         jQuery('body').on('fp.click', 'table td,th', function(e) {
             var $this = $(this);
             var $row = $this.parents('tr');
@@ -70,7 +70,17 @@
             var col = e.col + 1;
             jQuery('.active', $table).removeClass('active');
             $row.addClass('active');
-            jQuery('tr td:nth-child('+col+')', $table).addClass('active');
+            jQuery('tr td:eq('+col+')', $table).addClass('active');
+            console.log('fp.clicked');
+        });
+        jQuery('.freeze-container input').on('keyup', function() {
+            $(this).parents('tr').find('td').eq(5).text('hahahah');
+            $(this).parents('td').trigger('fp.update');
+        });
+        jQuery('.freeze-container .btn').on('click', function() {
+            $(this).parents('tr').find('td').eq(6).text('hehehe');
+            $(this).parents('tr').find('td').eq(7).text('hohoho');
+            $(this).parents('td').trigger('fp.update');
         });
       });
     </script>
@@ -198,8 +208,8 @@
               </thead>
               <tbody>
                   <tr>
-                      <td>1</td>
-                      <td>Adi</td>
+                      <td><button type="button" class="btn">Test</button></td>
+                      <td><input type="text" class="input-text"/></td>
                       <td>Approved</td>
                       <td>2</td>
                       <td>-</td>

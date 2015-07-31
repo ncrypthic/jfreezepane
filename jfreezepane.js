@@ -73,15 +73,42 @@
         inst.$bottomRight = $('<div class="freeze-bottom-right"><div class="freeze-panel"/></div>');
         inst.$elmt.data('freezePane', inst);
         inst.$elmt.trigger('fp.init');
+        inst.$container.on('fp.update', function(e) {
+            var table = jQuery(e.target).parents('table');
+            if(!table) {
+                return;
+            }
+            var $src = $(e.target);
+            if($src.prop('nodeName') !== 'TD') {
+                $src = $src.parents('td');
+            }
+            var row = $src.parent();
+            var table = $src.parents('table');
+            var rowIdx = table.find('tr').index(row);
+            for(var prop in inst.regions) {
+                if(inst.regions[prop][0] === table[0]) continue;
+                inst.regions[prop].find('tr').eq(rowIdx).replaceWith(row.clone(true));
+            }
+        });
     };
     
     FreezePanel.prototype.draw = function() {
         var inst = this; // alias
         inst.$elmt.before(inst.$container);
-        inst.regions.tl = inst.$tl = inst.$elmt.clone(true).attr('id', null).data('freezePane', inst);
-        inst.regions.tr = inst.$tr = inst.$elmt.clone(true).attr('id', null).data('freezePane', inst);
-        inst.regions.bl = inst.$bl = inst.$elmt.clone(true).attr('id', null).data('freezePane', inst);
-        inst.regions.br = inst.$br = inst.$elmt.clone(true).attr('id', null).data('freezePane', inst);
+        var proto = inst.$elmt.clone(true);
+        var header = inst.$elmt.find('tr').eq(0);
+        if(!header) return;
+        // Statically set width for cloned table first row cells from
+        // original table cell width
+        header.children().each(function(i) {
+            proto.find('tr').eq(0).children().eq(i)
+                .css('width', $(this).width());
+        });
+        proto.attr('id', null);
+        inst.regions.tl = inst.$tl = proto.clone(true).data('freezePane', inst);
+        inst.regions.tr = inst.$tr = proto.clone(true).data('freezePane', inst);
+        inst.regions.bl = inst.$bl = proto.clone(true).data('freezePane', inst);
+        inst.regions.br = inst.$br = proto.clone(true).data('freezePane', inst);
         var $topLeftPanel = inst.$topLeft.find('.freeze-panel');
         var $topRightPanel = inst.$topRight.find('.freeze-panel');
         var $bottomLeftPanel = inst.$bottomLeft.find('.freeze-panel');
@@ -137,9 +164,17 @@
         });
         // Setup regions dimension
         var nodeName = $('tr', inst.$elmt).eq(inst.options.row).children().eq(inst.options.col).prop('nodeName');
-        inst.$cell = $('tr', inst.$topLeft).eq(inst.options.row).find(nodeName).eq(inst.options.col||0);
-        var height = inst.$cell.offset().top + inst.$cell.outerHeight(true) - inst.$container.offset().top;
-        var width  = inst.$cell.offset().left + inst.$cell.outerWidth(true) - inst.$container.offset().left;
+        inst.$row  = $('tr', inst.$elmt).eq(inst.options.row);
+        inst.$cell = inst.$row.find(nodeName).eq(inst.options.col||0);
+        var rows = $('tr', inst.$elmt);
+        var height = 0;
+        for(var row = 0; row < inst.options.row||0; row++) {
+            height += rows.eq(row).outerHeight(true);
+        }
+        var width = 0;
+        for(var col = 0; col < inst.options.col||0; col++) {
+            width += inst.$row.find(nodeName).eq(col).outerWidth(true);
+        }
         if(inst.redraw === false) {
             inst.options.row === false
                 ? $('.freeze-top').hide()
@@ -195,6 +230,16 @@
                 data.col = val; 
             else 
                 return data.col;
+        },
+        draw: function() {
+            var $this = $(this);
+            var inst = $this.freezePane('getInstance');
+            if(inst) {
+                inst.draw();
+                return inst;
+            }
+            
+            throw new Error('Uninitialized');
         },
         freeze : function(opts) {
             var $this = $(this);
