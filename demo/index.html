@@ -62,7 +62,7 @@
     <script src="../jfreezepane.js"></script>
     <script>
       jQuery(document).ready( function() {
-        jQuery('#demotbl').freezePane({ col: 2, autohide: false });
+        jQuery('#demotbl').freezePane({ col: 2, row: 1, autohide: false });
         jQuery('body').on('fp.click', 'table td,th', function(e) {
             var $this = $(this);
             var $row = $this.parents('tr');
