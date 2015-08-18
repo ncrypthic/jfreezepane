@@ -73,7 +73,7 @@
         inst.$bottomRight = $('<div class="freeze-bottom-right"><div class="freeze-panel"/></div>');
         inst.$elmt.data('freezePane', inst);
         inst.$elmt.trigger('fp.init');
-        inst.$container.on('fp.update', function(e) {
+        inst.$container.on('fp.update', 'tr', function(e) {
             var table = jQuery(e.target).parents('table');
             if(!table) {
                 return;
@@ -163,17 +163,17 @@
             }
         });
         // Setup regions dimension
-        var nodeName = $('tr', inst.$elmt).eq(inst.options.row).children().eq(inst.options.col).prop('nodeName');
-        inst.$row  = $('tr', inst.$elmt).eq(inst.options.row);
+        var nodeName = $('tr', inst.$bottomRight).eq(inst.options.row).children().eq(inst.options.col).prop('nodeName');
+        inst.$row  = $('tr', inst.$bottomRight).eq(inst.options.row);
         inst.$cell = inst.$row.find(nodeName).eq(inst.options.col||0);
-        var rows = $('tr', inst.$elmt);
+        var rows = $('tr', inst.$bottomRight);
         var height = 0;
         for(var row = 0; row < inst.options.row||0; row++) {
             height += rows.eq(row).outerHeight(true);
         }
         var width = 0;
         for(var col = 0; col < inst.options.col||0; col++) {
-            width += inst.$row.find(nodeName).eq(col).outerWidth(true);
+            width += inst.$bottomRight.find('tr:eq(0)').children().eq(col).outerWidth(true);
         }
         if(inst.redraw === false) {
             inst.options.row === false
@@ -259,7 +259,7 @@
             if(!inst) return;
             inst.$container.remove();
             inst.$elmt.show();
-            $this.data('freezePane', undefined);
+            $this.removeData('freezePane');
             
             return this;
         }
@@ -298,11 +298,16 @@
         }
         table.freezePane(settings.oInit.freezePane);
     };
+    var destroyDataTable = function(e, settings) {
+        var table = $(settings.nTable);
+        table.freezePane('unfreeze');
+    };
     $(document)
         .on('page.dt', resetDataTable)
         .on('length.dt', resetDataTable)
         .on('page.dt', resetDataTable)
         .on('order.dt', resetDataTable)
         .on('search.dt', resetDataTable)
-        .on('draw.dt', resetDataTable);
+        .on('draw.dt', resetDataTable)
+        .on('destroy.dt', destroyDataTable);
 })( jQuery );
